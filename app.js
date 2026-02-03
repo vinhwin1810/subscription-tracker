@@ -17,10 +17,13 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.listen(PORT, (req, res) => {
+app.listen(PORT, async (err) => {
+  if (err) {
+    console.error("Error starting server:", err);
+    process.exit(1);
+  }
   console.log(`Server is running on port http://localhost:${PORT}`);
+  await connectDB();
 });
-
-await connectDB();
 
 export default app;
