@@ -3,6 +3,8 @@ import { PORT } from "./config/env.js";
 import userRouter from "./routes/user.routes.js";
 import authRouter from "./routes/auth.routes.js";
 import subscriptionRouter from "./routes/subscription.routes.js";
+import connectDB from "./db/mongodb.js";
+import { connect } from "mongoose";
 
 const app = express();
 app.use(express.json());
@@ -18,5 +20,7 @@ app.get("/", (req, res) => {
 app.listen(PORT, (req, res) => {
   console.log(`Server is running on port http://localhost:${PORT}`);
 });
+
+await connectDB();
 
 export default app;
