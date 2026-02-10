@@ -46,6 +46,14 @@ export const SignIn = async (req, res, next) => {
       error.statusCode = 401;
       throw error;
     }
+
+    // Check if user is an OAuth user (no password set)
+    if (!user.password && user.googleId) {
+      const error = new Error("This account uses Google Sign-In. Please sign in with Google.");
+      error.statusCode = 401;
+      throw error;
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       const error = new Error("Invalid password");
